@@ -80,7 +80,7 @@ export default function Bar() {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" className={classes.title}>
-            Logo
+            Eduprov Course Finder
           </Typography>
           <div
             style={{
