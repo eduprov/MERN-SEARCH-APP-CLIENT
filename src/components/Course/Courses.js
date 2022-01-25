@@ -9,7 +9,7 @@ import {
 } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { getCourse } from "../../actions/courseAction";
 import Course from "../Home/Course";
 import Loader from "../Loader/Loader";
@@ -447,6 +447,12 @@ const Courses = () => {
     (state) => state.courses
   );
 
+  const { user } = useSelector(
+    (state) => state.user
+  );
+
+  let navigate = useNavigate();
+
   const keyword = id.keyword;
 
   const handleChange = (event) => {
@@ -476,6 +482,9 @@ const Courses = () => {
         value
       )
     );
+    if (!user) {
+      navigate("/");
+    }
   }, [
     dispatch,
     keyword,
@@ -486,6 +495,8 @@ const Courses = () => {
     currentPage,
     coursename,
     value,
+    user,
+    navigate
   ]);
 
   return (

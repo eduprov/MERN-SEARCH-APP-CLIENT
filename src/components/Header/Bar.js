@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -42,9 +42,6 @@ export default function Bar() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
 
-  const { error, loading, isAuthenticated, user } = useSelector(
-    (state) => state.user
-  );
 
   const handleChange = (event) => {
     setAuth(event.target.checked);
@@ -62,16 +59,13 @@ export default function Bar() {
   const alert = useAlert();
   let navigate = useNavigate();
 
-  // useEffect(() => {
-  //   if (!user) {
-  //     navigate("/");
-  //   }
-  // }, [dispatch, alert]);
 
   function logoutUser() {
     dispatch(logout());
     alert.success("Logout Successfully");
+    navigate('/')
   }
+
 
   return (
     <div className={classes.root}>
@@ -126,7 +120,6 @@ export default function Bar() {
                 open={open}
                 onClose={handleClose}
               >
-                <MenuItem onClick={handleClose}>Profile</MenuItem>
                 <MenuItem onClick={logoutUser}>Logout</MenuItem>
               </Menu>
             </div>

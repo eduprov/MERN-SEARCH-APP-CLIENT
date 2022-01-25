@@ -11,6 +11,7 @@ import {
   LOAD_USER_FAIL,
   LOGOUT_SUCCESS,
   LOGOUT_FAIL,
+  USER_LOGOUT,
 } from "../constants/userConstants";
 
 export const userReducer = (state = { user: {} }, action) => {
@@ -62,6 +63,8 @@ export const userReducer = (state = { user: {} }, action) => {
         loading: false,
         error: action.payload,
       };
+    case USER_LOGOUT:
+      return {};
 
     case CLEAR_ERRORS:
       return {

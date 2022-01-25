@@ -12,7 +12,7 @@ const LoginSignup = () => {
   const alert = useAlert();
   let navigate = useNavigate();
 
-  const { error, loading, isAuthenticated } = useSelector(
+  const { error, loading, isAuthenticated, user } = useSelector(
     (state) => state.user
   );
 
@@ -23,13 +23,13 @@ const LoginSignup = () => {
   const [loginEmail, setLoginEmail] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
 
-  const [user, setUser] = useState({
+  const [users, setUsers] = useState({
     name: "",
     email: "",
     password: "",
   });
 
-  const { name, email, password } = user;
+  const { name, email, password } = users;
 
   const [avatar, setAvatar] = useState();
   const [avatarPreview, setAvatarPreview] = useState("/Profile.png");
@@ -63,7 +63,7 @@ const LoginSignup = () => {
       };
       reader.readAsDataURL(e.target.files[0]);
     } else {
-      setUser({ ...user, [e.target.name]: e.target.value });
+      setUsers({ ...users, [e.target.name]: e.target.value });
     }
   };
 
@@ -72,10 +72,10 @@ const LoginSignup = () => {
       alert.error(error);
       dispatch(clearErrors());
     }
-    if (user) {
-      navigate("/course");
+    if(user){
+      navigate('/course')
     }
-  }, [dispatch, error, alert, isAuthenticated, navigate]);
+  }, [dispatch, error, alert, isAuthenticated, navigate, user]);
 
   const switchTabs = (e, tab) => {
     if (tab === "login") {

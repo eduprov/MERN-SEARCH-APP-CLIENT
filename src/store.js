@@ -8,6 +8,7 @@ const reducer = combineReducers({
   courses: courseReducer,
   courseDetails: courseDetailsReducer,
   user: userReducer,
+  
 });
 
 const userInfoFromStorage = localStorage.getItem("user")

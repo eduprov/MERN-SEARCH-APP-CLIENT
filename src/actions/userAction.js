@@ -10,8 +10,7 @@ import {
   LOAD_USER_REQUEST,
   LOAD_USER_SUCCESS,
   LOAD_USER_FAIL,
-  LOGOUT_SUCCESS,
-  LOGOUT_FAIL,
+  USER_LOGOUT,
 } from "../constants/userConstants";
 
 // Login
@@ -22,15 +21,15 @@ export const login = (email, password) => async (dispatch) => {
     });
     const config = { headers: { "Content-Type": "application/json" } };
     const { data } = await axios.post(
-      `http://localhost:4000/api/v1/login`,
+      `https://course-data-api.herokuapp.com/api/v1/login`,
       { email, password },
       config
     );
     dispatch({
       type: LOGIN_SUCCESS,
-      payload: data.user,
+      payload: data,
     });
-    localStorage.setItem("user", JSON.stringify(data))
+    localStorage.setItem("user", JSON.stringify(data));
   } catch (error) {
     dispatch({
       type: LOGIN_FAIL,
@@ -47,12 +46,13 @@ export const register = (userData) => async (dispatch) => {
     const config = { headers: { "Content-Type": "multipart/form-data" } };
 
     const { data } = await axios.post(
-      `http://localhost:4000/api/v1/register`,
+      `https://course-data-api.herokuapp.com/api/v1/register`,
       userData,
       config
     );
 
-    dispatch({ type: REGISTER_USER_SUCCESS, payload: data.user });
+    dispatch({ type: REGISTER_USER_SUCCESS, payload: data });
+    localStorage.setItem("user", JSON.stringify(data));
   } catch (error) {
     dispatch({
       type: REGISTER_USER_FAIL,
@@ -68,10 +68,12 @@ export const loadUser = () => async (dispatch) => {
       type: LOAD_USER_REQUEST,
     });
 
-    const { data } = await axios.get(`http://localhost:4000/api/v1/profile`);
+    const { data } = await axios.get(
+      `https://course-data-api.herokuapp.com/api/v1/profile`
+    );
     dispatch({
       type: LOAD_USER_SUCCESS,
-      payload: data.user,
+      payload: data,
     });
   } catch (error) {
     dispatch({
@@ -83,13 +85,8 @@ export const loadUser = () => async (dispatch) => {
 
 // Logout User
 export const logout = () => async (dispatch) => {
-  try {
-    await axios.get(`http://localhost:4000/api/v1/logout`);
-
-    dispatch({ type: LOGOUT_SUCCESS });
-  } catch (error) {
-    dispatch({ type: LOGOUT_FAIL, payload: error.response.data.message });
-  }
+  localStorage.removeItem("user");
+  dispatch({ type: USER_LOGOUT });
 };
 
 // Clearing Errors
