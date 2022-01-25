@@ -482,9 +482,7 @@ const Courses = () => {
         value
       )
     );
-    if (!user) {
-      navigate("/");
-    }
+  
   }, [
     dispatch,
     keyword,

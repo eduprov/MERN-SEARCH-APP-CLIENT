@@ -33,8 +33,7 @@ const useStyles = makeStyles({
     marginLeft: "-150px",
   },
   card: {
-    width: "100%",
-    maxWidth: "900px",
+    width: "10%",
   },
   title: {
     textTransform: "uppercase",
